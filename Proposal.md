@@ -8,7 +8,10 @@ Spotify is a very large music platform with subscribers from all around the worl
 
 Description of Data
 
+In our dashboard we will be visualizing around 30000 rows of data. Each of these rows corresponds to a song on a Spotify playist, and includes information including song name, artist, album, playlist genre, and various song qualities like energy, acousticness, danceability, liveness, speechiness, key, loudness, major/minor, instrumentalness, valence, tempo, and duration. The [dataset](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21) was provided on Github as the January 21, 2020 [Tidy Tuesday challenge](https://|github.com/rfordatascience/tidytuesday).
 
+Research Questions
 
-research questions we are thinking to explore
+Usage Scenarios
+
 
