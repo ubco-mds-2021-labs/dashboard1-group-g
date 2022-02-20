@@ -10,7 +10,7 @@ If you are not able to agree on these points, it is a sign that your group may b
 | Name     | GitHub Handle                          |
 |----------|----------------------------------------|
 | Sara Hall | [@SaraAnnHall](https://github.com/SaraAnnHall) |
-| Person 2 | [@username](https://github.com/firasm) |
+| Mayukha Bheemavarapu | [@MayukhaB](https://github.com/MayukhaB) |
 | Person 3 | [@username](https://github.com/firasm) |
 | Person 4 | [@username](https://github.com/firasm) |
 
