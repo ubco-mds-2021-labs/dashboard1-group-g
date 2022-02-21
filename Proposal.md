@@ -17,7 +17,7 @@ In our dashboard we will be visualizing around 30000 rows of data. Each of these
 3. While the correlations between individual metrics and song popularity are quite small, how much of the variation in song popularity can be explained by these metrics if we use all of them as predictors in a linear regression?
 4. Which artists and genres are most popular? 
 
-**Usage Scenarios**
+**Example Usage Scenario**
 
 John is a singer and he writes most of the songs by himself. Recently, he is thinking 
 about creating a new album. He wants to understand what song qualities are associa
