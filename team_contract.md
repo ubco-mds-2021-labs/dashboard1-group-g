@@ -12,7 +12,7 @@ If you are not able to agree on these points, it is a sign that your group may b
 | Sara Hall | [@SaraAnnHall](https://github.com/SaraAnnHall) |
 | Mayukha Bheemavarapu | [@MayukhaB](https://github.com/MayukhaB) |
 | Neethu Gopalakrishna | [@Neethu](https://github.com/Neetz78) |
-| Person 4 | [@username](https://github.com/firasm) |
+| Xin Tian| [@xintian927](https://github.com/xintian927) |
 
 ## Participation
 
