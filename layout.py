@@ -1,5 +1,6 @@
 #All import statements
 from ctypes import alignment
+from tkinter import N
 import pandas as pd
 import altair as alt
 from dash import Dash, html, dcc
@@ -45,14 +46,14 @@ def plot(data):
 ##plot of subgenres for the genre selected.
 def subplot(data):
     chart = alt.Chart(data).mark_circle().encode(
-        alt.X('Playlist Subgenre'),
-        alt.Y('count(Name)',sort='-x'),
+        alt.X('Playlist Subgenre',title='Subgenre'),
+        alt.Y('count(Name)',sort='-x',title='Number of Records'),
         color=alt.Color('Playlist Subgenre'),
         size=alt.Size('count(Name)'),
         tooltip='count(Playlist Subgenre)'
     ).properties(
-        width=800,
-        height=450).interactive()
+        width=500,
+        height=400).interactive()
     return chart.to_html()
 
 
@@ -65,26 +66,26 @@ data = getSpotifyData()
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
 header=html.Div([
 
-        html.Div([], className = 'col-1'), #Same as img width, allowing to have the title centrally aligned
+        html.Div([], className = 'col-2'), #Same as img width, allowing to have the title centrally aligned
 
         html.Div([
             html.H1(children='Spotify',
                     style = {'textAlign' : 'center','color':'Green'}
             )],
-            className='col-10',
+            className='col-8',
             style = {'padding-top' : '2%'}
         ),
 
         html.Div([
             html.Img(
-                    src = app.get_asset_url('/Users/neethug/Desktop/Neethu/Course/DATA551/dashboard1-group-g/logo.png'),
-                    height = '43 px',
+                    src = app.get_asset_url('logo.png'),
+                    height = '50 px',
                     width = 'auto')
             ],
-            className = 'col-1',
+            className = 'col-2',
             style = {
                     'align-items': 'center',
-                    'padding-top' : '1%',
+                    'padding-top' : '2%',
                     'height' : 'auto'})
 
         ],
@@ -92,6 +93,9 @@ header=html.Div([
         style = {'height' : '4%',
                 'background-color' : 'Black'}
         )
+#creating one more dropdown
+
+
 genredrop= html.Div([dbc.Row([html.Div([
             html.H3(children='Genre',
                     style = {'textAlign' : 'start','color':'black'}
@@ -106,13 +110,14 @@ genredrop= html.Div([dbc.Row([html.Div([
                 id = 'genre-widget') 
             ], className='col-5',
                      style={'height' : '2%',
-                'background-color' : 'grey','textAlign' : 'start'}
+                'background-color' : 'black','align-items' : 'end'}
             )       
         ])
 ],
         className = 'row',
         style = {'height' : '2%',
-                'background-color' : 'green'})
+                'background-color' : 'green'}
+)
 
 popularitybar=html.Div([dbc.Row([html.Div([
                 html.H3(children='Popularity Rating',
@@ -127,14 +132,30 @@ popularitybar=html.Div([dbc.Row([html.Div([
         style = {'height' : '2%',
                 'background-color' : 'green'}
 )
-plot2=dbc.Row(
-            html.Iframe(
+plot2=html.Div([dbc.Row(html.Iframe(
                 id = 'timecountplot', 
-                style={'border-width': '0', 'width': '100%', 'height': '600px'})
+                style={'border-width': '0', 'width': '100%', 'height': '600px'}
+        ),
+                 className='col-10',
+              style = {'padding-top' : '1%'}       
+              
         )
-plot3=html.Iframe(id='subgenreplot',srcDoc=subplot(data),
-                  style={'border-width': '0', 'width': '100%', 'height': '600px'}
-        )
+    ],
+        className='row',
+               style={'height':'2%','background-color' : 'gray'}       
+               
+)
+
+plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',
+                  style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
+        ),
+                        className='col-7',
+              style = {'padding-top' : '1%'}
+)
+],
+               className='row',
+               style={'height':'2%','background-color' : 'gray'}
+)
 
 app.layout = dbc.Container([header,genredrop,popularitybar,plot2,plot3])
 
@@ -154,7 +175,7 @@ def plot_altair(genres, popularity):
     Input('genre-widget','value')
 )
 def subplot_altair(genres):
-    newData = data.loc[(data['Playlist Genre'] == genres)]
+    newData = data.loc[data['Playlist Genre'].isin(genres)]
     return subplot(newData)
 
 if __name__ == '__main__':
