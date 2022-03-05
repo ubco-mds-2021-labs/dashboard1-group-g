@@ -133,7 +133,7 @@ popularitybar=html.Div([dbc.Row([html.Div([
                 'background-color' : 'green'}
 )
 plot2=html.Div([dbc.Row(html.Iframe(
-                id = 'timecountplot', 
+                id = 'timecountplot', srcDoc = plot(data),
                 style={'border-width': '0', 'width': '100%', 'height': '600px'}
         ),
                  className='col-10',
@@ -146,7 +146,7 @@ plot2=html.Div([dbc.Row(html.Iframe(
                
 )
 
-plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',
+plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',srcDoc=subplot(data),
                   style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
         ),
                         className='col-7',
@@ -162,21 +162,16 @@ app.layout = dbc.Container([header,genredrop,popularitybar,plot2,plot3])
 #Set up callbacks/backend
 @app.callback(
     Output('timecountplot', 'srcDoc'),
+    Output('subgenreplot','srcDoc'),
     Input('genre-widget', 'value'),
     Input('popularity-widget', 'value'))
 def plot_altair(genres, popularity):
     newData = data.loc[data['Playlist Genre'].isin(genres)]
     newData = data.loc[(data['Popularity'] >= popularity[0]) & (data['Popularity'] <= popularity[1])]
-    return plot(newData)
+    newData1 = data.loc[data['Playlist Genre'].isin(genres)]
+    return plot(newData), subplot(newData1)
 
-#Setting up callback for plot3
-@app.callback(
-    Output('subgenreplot','srcDoc'),
-    Input('genre-widget','value')
-)
-def subplot_altair(genres):
-    newData = data.loc[data['Playlist Genre'].isin(genres)]
-    return subplot(newData)
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
