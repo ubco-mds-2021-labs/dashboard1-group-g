@@ -74,8 +74,16 @@ def subplot(data):
         height=400).interactive()
     return chart.to_html()
 
-
-
+def pop_vs_year(data):
+    chart = alt.Chart(data).mark_line().encode(
+        alt.X('year(Album Release Date)'),
+        alt.Y('mean(Popularity)'),
+        color=alt.Color('Playlist Genre')
+    ).properties(
+        width=800,
+        height=450
+    ).interactive()
+    return chart.to_html()
 
 # Read in global data
 data = getSpotifyData()
@@ -185,7 +193,7 @@ plot2=html.Div([dbc.Row(html.Iframe(
                 id = 'timecountplot', srcDoc = plot(data),
                 style={'border-width': '0', 'width': '100%', 'height': '600px'}
         ),
-                 className='col-10',
+                 className='col-11',
               style = {'padding-top' : '1%'}       
               
         )
@@ -194,11 +202,10 @@ plot2=html.Div([dbc.Row(html.Iframe(
                style={'height':'2%','background-color' : 'gray'}       
                
 )
-
 plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',srcDoc=subplot(data),
                   style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
         ),
-                        className='col-7',
+                        className='col-12',
               style = {'padding-top' : '1%'}
 )
 ],
@@ -206,13 +213,25 @@ plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',srcDoc=subplot(data),
                style={'height':'2%','background-color' : 'gray'}
 )
 
-app.layout = dbc.Container([header,genredrop,releasedate,top10,plot1,plot2,plot3])
+plot4=html.Div([dbc.Row(html.Iframe(id='popvsyear',srcDoc=pop_vs_year(data),
+                  style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
+        ),
+                        className='col-13',
+              style = {'padding-top' : '1%'}
+)
+],
+               className='row',
+               style={'height':'2%','background-color' : 'gray'}
+)
+
+app.layout = dbc.Container([header,genredrop,releasedate,top10,plot1,plot2,plot3,plot4])
 
 #Set up callbacks/backend
 @app.callback(
     Output('top_n_plot', 'srcDoc'),
     Output('timecountplot', 'srcDoc'),
     Output('subgenreplot','srcDoc'),
+    Output('popvsyear','srcDoc'),
     Input('genre_widget', 'value'),
     Input('ycol', 'value'),
     Input('release_year', 'value'))
@@ -220,7 +239,7 @@ app.layout = dbc.Container([header,genredrop,releasedate,top10,plot1,plot2,plot3
 def plot_altair(genre_widget,ycol,release_year):
     newData = data.loc[data['Playlist Genre'].isin(genre_widget)]
     newData = newData.loc[(newData['Year'] >= release_year[0]) & (newData['Year'] <= release_year[1])]
-    return top_n_by_popularity(newData,ycol),plot(newData),subplot(newData)
+    return top_n_by_popularity(newData,ycol),plot(newData),subplot(newData),pop_vs_year(newData)
 
 
 
