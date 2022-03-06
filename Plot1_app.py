@@ -58,8 +58,8 @@ def top_n_by_popularity(data,ycol='Name'):
         alt.X('mean(Popularity)'),
         alt.Y(ycol,sort='-x')
         ).properties(
-        width=800,
-        height=450
+        width=400,
+        height=200
     ).interactive()
     return chart.to_html()
 
@@ -78,8 +78,8 @@ def count_vs_year(data):
         alt.Y('count(Name)',sort='-x'),
         color=alt.Color('Playlist Genre')
     ).properties(
-        width=800,
-        height=450
+        width=400,
+        height=200
     ).interactive()
     return chart.to_html()
 
@@ -96,12 +96,12 @@ def plot_subgenres(data):
     chart = alt.Chart(data).mark_circle().encode(
         alt.X('Playlist Subgenre',title='Subgenre'),
         alt.Y('count(Name)',sort='-x',title='Number of Records'),
-        color=alt.Color('Playlist Subgenre'),
-        size=alt.Size('count(Name)'),
+        color=alt.Color('Playlist Subgenre', legend = None),
+        size=alt.Size('count(Name)', legend = None),
         tooltip='count(Playlist Subgenre)'
     ).properties(
         width=500,
-        height=400).interactive()
+        height=100).interactive()
     return chart.to_html()
 
 def pop_vs_year(data):
@@ -118,8 +118,8 @@ def pop_vs_year(data):
         alt.Y('mean(Popularity)'),
         color=alt.Color('Playlist Genre')
     ).properties(
-        width=800,
-        height=450
+        width=400,
+        height=200
     ).interactive()
     return chart.to_html()
 
@@ -213,56 +213,37 @@ top10=html.Div([dbc.Row([html.Div([
                 'background-color' : 'green'}
 )
 
-plot1=html.Div([dbc.Row(html.Iframe(
+row1=html.Div([dbc.Row([
+        dbc.Col(html.Iframe(
                 id = 'top_n_plot', srcDoc= top_n_by_popularity(data,ycol='Name'),
-                style={'border-width': '0', 'width': '100%', 'height': '600px'}
-        ),
-                 className='col-10',
-              style = {'padding-top' : '1%'}       
-              
-        )
-    ],
-        className='row',
-               style={'height':'2%','background-color' : 'gray'}       
-               
-)
-
-plot2=html.Div([dbc.Row(html.Iframe(
+                style={'border-width': '0', 'width': '100%', 'height': '300px'}, 
+        ), md = 6),
+        dbc.Col(html.Iframe(
                 id = 'timecountplot', srcDoc = count_vs_year(data),
-                style={'border-width': '0', 'width': '100%', 'height': '600px'}
-        ),
-                 className='col-11',
-              style = {'padding-top' : '1%'}       
-              
-        )
+                style={'border-width': '0', 'width': '100%', 'height': '300px'}
+        ), md = 6)] 
+        ), 
     ],
         className='row',
-               style={'height':'2%','background-color' : 'gray'}       
-               
-)
-plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',srcDoc=plot_subgenres(data),
-                  style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
-        ),
-                        className='col-12',
-              style = {'padding-top' : '1%'}
-)
-],
-               className='row',
-               style={'height':'2%','background-color' : 'gray'}
+        style={'height':'2%','background-color' : 'gray'}                   
 )
 
-plot4=html.Div([dbc.Row(html.Iframe(id='popvsyear',srcDoc=pop_vs_year(data),
-                  style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
-        ),
-                        className='col-13',
-              style = {'padding-top' : '1%'}
-)
-],
-               className='row',
-               style={'height':'2%','background-color' : 'gray'}
+row2=html.Div([dbc.Row([
+        dbc.Col(html.Iframe(
+                id='subgenreplot',srcDoc=plot_subgenres(data),
+                style={'border-width': '0', 'width': '100%', 'height': '300px','align-items' : 'end'} 
+        ), md = 6),
+        dbc.Col(html.Iframe(
+                id='popvsyear',srcDoc=pop_vs_year(data),
+                style={'border-width': '0', 'width': '100%', 'height': '300px','align-items' : 'end'}
+        ), md = 6)] 
+        ), 
+    ],
+        className='row',
+        style={'height':'2%','background-color' : 'gray'}                   
 )
 
-app.layout = dbc.Container([header,genredrop,releasedate,top10,plot1,plot2,plot3,plot4])
+app.layout = dbc.Container([header,genredrop,releasedate,top10,row1,row2])
 
 #Set up callbacks/backend
 @app.callback(
