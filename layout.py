@@ -54,6 +54,13 @@ def subplot(data):
     ).properties(
         width=500,
         height=400).interactive()
+    chart.configure_legend(
+    strokeColor='gray',
+    fillColor='#EEEEEE',
+    padding=10,
+    cornerRadius=10,
+    orient='top-right'
+)
     return chart.to_html()
 
 
