@@ -1,6 +1,6 @@
 dash
 dash_bootstrap_components
-ctypes 3.10.2
+ctypes == 3.10.2
 tkinter
 pandas
 altair
