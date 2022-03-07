@@ -5,6 +5,7 @@ from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from datetime import date
+from altair_data_server import data_server
 
 alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
