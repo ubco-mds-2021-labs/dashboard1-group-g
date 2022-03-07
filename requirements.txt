@@ -1,0 +1,9 @@
+ctypes
+tkinter
+pandas
+altair
+dash
+dash_bootstrap_components
+dash.dependencies
+datetime
+gunicorn

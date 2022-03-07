@@ -7,7 +7,7 @@ from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from datetime import date
-from xml.dom.minidom import CharacterData
+
 alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
 
@@ -90,6 +90,7 @@ data = getSpotifyData()
 
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 header=html.Div([
 
         html.Div([], className = 'col-2'), #Same as img width, allowing to have the title centrally aligned
