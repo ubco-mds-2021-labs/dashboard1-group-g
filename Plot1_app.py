@@ -12,8 +12,13 @@ alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
 
 
-#fetching data and wrangling data for visualization
+
 def getSpotifyData():
+    """Retrieves Spotify data from Github and performs the necessary wrangling. 
+
+    Returns:
+        pandas.DataFranme: A pandas data frame with the wrangle spotify data. 
+    """    
     data = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
     data = data.dropna()
     data = data.drop(['track_id', 'track_album_id', 'playlist_id'], axis=1)
@@ -35,6 +40,15 @@ def getSpotifyData():
 
 
 def top_n_by_popularity(data,ycol='Name'):
+    """Makes a plot for the 10 most popular songs or artists. 
+
+    Args:
+        data (pandas.DataFrame): The filtered data frame you want the top songs/artists from. 
+        ycol (str, optional): Can be either 'Artist' or 'Name', indicates which top 10 to plot. Defaults to 'Name'.
+
+    Returns:
+        html: An html page with the plot. 
+    """    
     data_filtered = data[["Name", "Artist","Popularity","Album Release Date"]]
     data_subset=data_filtered.groupby([ycol]).mean()
     data_subset = data_subset. reset_index()
@@ -44,44 +58,68 @@ def top_n_by_popularity(data,ycol='Name'):
         alt.X('mean(Popularity)'),
         alt.Y(ycol,sort='-x')
         ).properties(
-        width=800,
-        height=450
+        width=400,
+        height=200
     ).interactive()
     return chart.to_html()
 
-#Placeholder until actual plots are ready. 
-def plot(data):
+
+def count_vs_year(data):
+    """Plot the count of records released over time for each genre. 
+
+    Args:
+        data (pandas.DataFrame): The filtered data frame to plot information from. 
+
+    Returns:
+        html: An html page with the plot. 
+    """    
     chart = alt.Chart(data).mark_line().encode(
         alt.X('year(Album Release Date)'),
         alt.Y('count(Name)',sort='-x'),
         color=alt.Color('Playlist Genre')
     ).properties(
-        width=800,
-        height=450
+        width=400,
+        height=200
     ).interactive()
     return chart.to_html()
 
-##plot of subgenres for the genre selected.
-def subplot(data):
+
+def plot_subgenres(data):
+    """Plot the count of records in subgenres for each genre. 
+
+    Args:
+        data (pandas.DataFrame): The filtered data frame to plot information from. 
+
+    Returns:
+        html: An html page with the plot. 
+    """    
     chart = alt.Chart(data).mark_circle().encode(
         alt.X('Playlist Subgenre',title='Subgenre'),
         alt.Y('count(Name)',sort='-x',title='Number of Records'),
-        color=alt.Color('Playlist Subgenre'),
-        size=alt.Size('count(Name)'),
+        color=alt.Color('Playlist Subgenre', legend = None),
+        size=alt.Size('count(Name)', legend = None),
         tooltip='count(Playlist Subgenre)'
     ).properties(
         width=500,
-        height=400).interactive()
+        height=100).interactive()
     return chart.to_html()
 
 def pop_vs_year(data):
+    """Plot the average popularity of records released over time for each genre. 
+
+    Args:
+        data (pandas.DataFrame): The filtered data frame to plot information from. 
+
+    Returns:
+        html: An html page with the plot. 
+    """    
     chart = alt.Chart(data).mark_line().encode(
         alt.X('year(Album Release Date)'),
         alt.Y('mean(Popularity)'),
         color=alt.Color('Playlist Genre')
     ).properties(
-        width=800,
-        height=450
+        width=400,
+        height=200
     ).interactive()
     return chart.to_html()
 
@@ -95,7 +133,7 @@ header=html.Div([
         html.Div([], className = 'col-2'), #Same as img width, allowing to have the title centrally aligned
 
         html.Div([
-            html.H1(children='Spotify',
+            html.H1(children='Spotified',
                     style = {'textAlign' : 'center','color':'Green'}
             )],
             className='col-8',
@@ -104,7 +142,7 @@ header=html.Div([
 
         html.Div([
             html.Img(
-                    src = app.get_asset_url('logo.png'),
+                    src = app.get_asset_url('logo1.png'),
                     height = '50 px',
                     width = 'auto')
             ],
@@ -175,56 +213,37 @@ top10=html.Div([dbc.Row([html.Div([
                 'background-color' : 'green'}
 )
 
-plot1=html.Div([dbc.Row(html.Iframe(
+row1=html.Div([dbc.Row([
+        dbc.Col(html.Iframe(
                 id = 'top_n_plot', srcDoc= top_n_by_popularity(data,ycol='Name'),
-                style={'border-width': '0', 'width': '100%', 'height': '600px'}
-        ),
-                 className='col-10',
-              style = {'padding-top' : '1%'}       
-              
-        )
+                style={'border-width': '0', 'width': '100%', 'height': '300px'}, 
+        ), md = 6),
+        dbc.Col(html.Iframe(
+                id = 'timecountplot', srcDoc = count_vs_year(data),
+                style={'border-width': '0', 'width': '100%', 'height': '300px'}
+        ), md = 6)] 
+        ), 
     ],
         className='row',
-               style={'height':'2%','background-color' : 'gray'}       
-               
+        style={'height':'2%','background-color' : 'gray'}                   
 )
 
-plot2=html.Div([dbc.Row(html.Iframe(
-                id = 'timecountplot', srcDoc = plot(data),
-                style={'border-width': '0', 'width': '100%', 'height': '600px'}
-        ),
-                 className='col-11',
-              style = {'padding-top' : '1%'}       
-              
-        )
+row2=html.Div([dbc.Row([
+        dbc.Col(html.Iframe(
+                id='subgenreplot',srcDoc=plot_subgenres(data),
+                style={'border-width': '0', 'width': '100%', 'height': '300px','align-items' : 'end'} 
+        ), md = 6),
+        dbc.Col(html.Iframe(
+                id='popvsyear',srcDoc=pop_vs_year(data),
+                style={'border-width': '0', 'width': '100%', 'height': '300px','align-items' : 'end'}
+        ), md = 6)] 
+        ), 
     ],
         className='row',
-               style={'height':'2%','background-color' : 'gray'}       
-               
-)
-plot3=html.Div([dbc.Row(html.Iframe(id='subgenreplot',srcDoc=subplot(data),
-                  style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
-        ),
-                        className='col-12',
-              style = {'padding-top' : '1%'}
-)
-],
-               className='row',
-               style={'height':'2%','background-color' : 'gray'}
+        style={'height':'2%','background-color' : 'gray'}                   
 )
 
-plot4=html.Div([dbc.Row(html.Iframe(id='popvsyear',srcDoc=pop_vs_year(data),
-                  style={'border-width': '0', 'width': '100%', 'height': '600px','align-items' : 'end'}
-        ),
-                        className='col-13',
-              style = {'padding-top' : '1%'}
-)
-],
-               className='row',
-               style={'height':'2%','background-color' : 'gray'}
-)
-
-app.layout = dbc.Container([header,genredrop,releasedate,top10,plot1,plot2,plot3,plot4])
+app.layout = dbc.Container([header,genredrop,releasedate,top10,row1,row2])
 
 #Set up callbacks/backend
 @app.callback(
@@ -237,11 +256,21 @@ app.layout = dbc.Container([header,genredrop,releasedate,top10,plot1,plot2,plot3
     Input('release_year', 'value'))
 
 def plot_altair(genre_widget,ycol,release_year):
+    """Update all four plots with the information from the widgets. 
+
+    Args:
+        genre_widget (list): List of genres to display from the genre dropdown. 
+        ycol (string): Either 'Name' or 'Artist', indicates which top 10 to plot, from the top 10 by dropdown. 
+        release_year (list)): List conatining start and end years, from the year slider. 
+
+    Returns:
+        list: A list with all four html plots. 
+    """    
     newData = data.loc[data['Playlist Genre'].isin(genre_widget)]
     newData = newData.loc[(newData['Year'] >= release_year[0]) & (newData['Year'] <= release_year[1])]
-    return top_n_by_popularity(newData,ycol),plot(newData),subplot(newData),pop_vs_year(newData)
+    return top_n_by_popularity(newData,ycol), count_vs_year(newData), plot_subgenres(newData), pop_vs_year(newData)
 
 
-
+#Run in debug mode if it's running as the main program. 
 if __name__ == '__main__':
     app.run_server(host='127.0.0.1',debug=True)
