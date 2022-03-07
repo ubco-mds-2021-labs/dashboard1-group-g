@@ -1,6 +1,4 @@
 #All import statements
-from ctypes import alignment
-from tkinter import N
 import pandas as pd
 import altair as alt
 from dash import Dash, html, dcc
