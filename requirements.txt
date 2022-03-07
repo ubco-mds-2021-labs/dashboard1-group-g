@@ -1,6 +1,6 @@
 dash
 dash_bootstrap_components
-ctypes
+ctypes 3.10.2
 tkinter
 pandas
 altair
