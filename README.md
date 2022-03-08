@@ -1,5 +1,11 @@
 # Spotified (Group G)
 
+[Public repository used for deployment](https://github.com/MayukhaB/prototype_development_spotified)
+
+[Link to the deployed app](https://prototype-for-spotified.herokuapp.com/)
+
+## Goals
+
 - To determine what makes a song popular based on the attributes present in the data, track_popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, etc.
 - While the correlations between individual metrics and song popularity are quite small, how much of the variation in song popularity can be explained by these metrics if we use all of them as predictors in a linear regression?
 
