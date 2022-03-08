@@ -23,7 +23,7 @@ The app opens initially to show the top 10 songs in the whole dataset, both the 
 
 If time permits, we will also include two modelling tabs, one for predicting song genre, and one for predicting song popularity. 
 
-![](prototype.gif)
+![](assets/prototype.gif)
 
 ## Describe your dataset in about 150-200 words
 
