@@ -1,21 +1,16 @@
 #All import statements
-from ctypes import alignment
-from tkinter import N
 import pandas as pd
 import altair as alt
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
+from altair_data_server import data_server
 import dash_bootstrap_components as dbc
 from datetime import date
-from xml.dom.minidom import CharacterData
 alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
 
-
-
 def getSpotifyData():
     """Retrieves Spotify data from Github and performs the necessary wrangling. 
-
     Returns:
         pandas.DataFranme: A pandas data frame with the wrangle spotify data. 
     """    
@@ -41,11 +36,9 @@ def getSpotifyData():
 
 def top_n_by_popularity(data,ycol='Name'):
     """Makes a plot for the 10 most popular songs or artists. 
-
     Args:
         data (pandas.DataFrame): The filtered data frame you want the top songs/artists from. 
         ycol (str, optional): Can be either 'Artist' or 'Name', indicates which top 10 to plot. Defaults to 'Name'.
-
     Returns:
         html: An html page with the plot. 
     """    
@@ -66,10 +59,8 @@ def top_n_by_popularity(data,ycol='Name'):
 
 def count_vs_year(data):
     """Plot the count of records released over time for each genre. 
-
     Args:
         data (pandas.DataFrame): The filtered data frame to plot information from. 
-
     Returns:
         html: An html page with the plot. 
     """    
@@ -86,10 +77,8 @@ def count_vs_year(data):
 
 def plot_subgenres(data):
     """Plot the count of records in subgenres for each genre. 
-
     Args:
         data (pandas.DataFrame): The filtered data frame to plot information from. 
-
     Returns:
         html: An html page with the plot. 
     """    
@@ -106,10 +95,8 @@ def plot_subgenres(data):
 
 def pop_vs_year(data):
     """Plot the average popularity of records released over time for each genre. 
-
     Args:
         data (pandas.DataFrame): The filtered data frame to plot information from. 
-
     Returns:
         html: An html page with the plot. 
     """    
@@ -128,6 +115,7 @@ data = getSpotifyData()
 
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server 
 header=html.Div([
 
         html.Div([], className = 'col-2'), #Same as img width, allowing to have the title centrally aligned
@@ -257,12 +245,10 @@ app.layout = dbc.Container([header,genredrop,releasedate,top10,row1,row2])
 
 def plot_altair(genre_widget,ycol,release_year):
     """Update all four plots with the information from the widgets. 
-
     Args:
         genre_widget (list): List of genres to display from the genre dropdown. 
         ycol (string): Either 'Name' or 'Artist', indicates which top 10 to plot, from the top 10 by dropdown. 
         release_year (list)): List conatining start and end years, from the year slider. 
-
     Returns:
         list: A list with all four html plots. 
     """    
