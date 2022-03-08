@@ -4,4 +4,3 @@ pandas
 altair
 datetime
 gunicorn
-altair_data_server
