@@ -1,5 +1,11 @@
 # Spotified (Group G)
 
+(Public repository used for deployment.)['https://github.com/SaraAnnHall/prototype_deployment']
+
+(Link to the deployed app.)[https://prototype-deployment-test.herokuapp.com/]
+
+## Goals
+
 - To determine which songs and artists have been the most popular over time. 
 - To determine how both the popularity and number of records released within each genre have changed over time. 
 - To see the breakdown of each genre into its subgenres. 
