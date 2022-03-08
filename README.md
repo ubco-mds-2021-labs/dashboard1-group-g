@@ -1,7 +1,7 @@
 # Spotified (Group G)
 
 
-[Public repository used for deployment]('https://github.com/SaraAnnHall/prototype_deployment')
+[Public repository used for deployment](https://github.com/SaraAnnHall/prototype_deployment)
 
 [Link to the deployed app](https://prototype-deployment-test.herokuapp.com/)
 
