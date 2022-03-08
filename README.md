@@ -1,6 +1,6 @@
 # Spotified (Group G)
 
-[Link to the deployed app](https://spotified-dashboard.herokuapp.com/)
+[Link to the deployed app](https://spotified-dashboard.herokuapp.com/), please note it's slow at the moment and will take a few seconds to load. 
 
 ## Goals
 
