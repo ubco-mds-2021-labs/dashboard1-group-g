@@ -3,6 +3,7 @@
 [Link to the deployed app](https://spotified-dashboard.herokuapp.com/), please note it's slow on the Heroku deployment and will take a few seconds to load and a few more seonds to update after any interactions. 
 
 [Link to Sara's deployment](https://prototype-deployment-test.herokuapp.com/)
+[Link to Neethu's deployment](https://spotifyproject551.herokuapp.com/)
 
 ## Goals
 
