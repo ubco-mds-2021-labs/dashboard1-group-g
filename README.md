@@ -6,6 +6,8 @@
 
 [Link to Neethu's deployment](https://spotifyproject551.herokuapp.com/)
 
+[Link to Xin's deployment](https://dashboardxxt.herokuapp.com/)
+
 ## Goals
 
 - To determine which songs and artists have been the most popular over time. 
