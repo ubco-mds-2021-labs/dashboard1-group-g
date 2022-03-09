@@ -8,6 +8,8 @@
 
 [Link to Xin's deployment](https://dashboardxxt.herokuapp.com/)
 
+[Link to Mayukha's deployment](https://prototype-for-spotified.herokuapp.com/)
+
 ## Goals
 
 - To determine which songs and artists have been the most popular over time. 
