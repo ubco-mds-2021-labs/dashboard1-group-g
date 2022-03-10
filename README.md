@@ -1,6 +1,6 @@
 # Spotified (Group G)
 
-[Link to the deployed app](https://spotified-dashboard.herokuapp.com/), please note it's slow on the Heroku deployment and will take a few seconds to load and a few more seonds to update after any interactions. 
+[Link to the deployed app](https://spotified-dashboard.herokuapp.com/), please note hat changes were made (wrangled data save to csv files) to speed up run times after all group member's deployed individually. This means the top link might be the only one that runs fast. The others all work, but are slow. 
 
 [Link to Sara's deployment](https://prototype-deployment-test.herokuapp.com/)
 
